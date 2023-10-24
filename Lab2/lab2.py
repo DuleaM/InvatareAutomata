@@ -9,7 +9,7 @@ class KMeans():
     centroid_number = random.randint(2, 10)
     points = []
     centroids = []
-    clusters = defaultdict(list)
+    clusters = {}
     
     def __init__(self):
         self.get_coordinates()
@@ -48,7 +48,8 @@ class KMeans():
         return round(euclidian_distance, 4)
 
 
-    def group_points(self):
+    def group_points_to_clusters(self):
+        clusters = defaultdict(list)
         for point in self.points:
             min_distance = sys.maxsize
             target_centroid = -1
@@ -64,8 +65,9 @@ class KMeans():
                     target_centroid = centroid_number 
             
             point['distance'] = min_distance
-            self.clusters[target_centroid].append(point)
-            
+            clusters[target_centroid].append(point)
+        
+        self.clusters = clusters
             
     def get_weight_center(self, points):
         
@@ -91,11 +93,10 @@ class KMeans():
             self.centroids[centroid_number] = new_centroid_coordinates
             
     def main(self):
-        self.group_points()
+        self.group_points_to_clusters()
         self.modify_centroids_coordinates()
         
         
-#pentru fiecare cluster cu i incepand de la 1
 if __name__ == '__main__':
     kmeans = KMeans()
  
