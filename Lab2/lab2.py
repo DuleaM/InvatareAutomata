@@ -60,14 +60,16 @@ class KMeans():
     def group_points_to_clusters(self):
         """
         cluster = {
-            cluster_number : 
-            {
-                'x' : x,
-                'y' : y
-            },
-            
-            {}, etc
-        }
+            cluster_number : [
+                {
+                    'x' : x,
+                    'y' : y
+                },
+                {},
+                {}
+            ]
+        },
+        
         """
         
         clusters = defaultdict(list)
@@ -114,8 +116,8 @@ class KMeans():
     
     def get_convergenta(self, clusters):
         suma = 0
-        for cluster in clusters:
-            suma += sum(point for point in cluster)
+        for points in clusters.values():
+            suma += sum(point['distance'] for point in points)
         
         return suma               
      
@@ -128,7 +130,6 @@ class KMeans():
         self.modify_centroids_coordinates()
         
         while not self.valid(self.group_points_to_clusters()):
-            
             
             self.clusters = self.group_points_to_clusters()
             self.modify_centroids_coordinates()

@@ -7,9 +7,6 @@ guass_ai = GaussAI()
 x_coordinates = defaultdict(list)
 y_coordinates = defaultdict(list)
 
-fig_width = 6 
-fig_height = 6  
-
 with open('output.txt', 'r') as file:
     for line in file:
         elements = line.split()
