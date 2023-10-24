@@ -2,6 +2,7 @@ import random
 import sys
 from math import sqrt
 from collections import defaultdict
+import time
 
 
 class KMeans():
@@ -29,6 +30,14 @@ class KMeans():
                 
                 
     def set_centroizi_coordinates(self):
+        """
+            centroid = {
+                number : {
+                    'x' : x,
+                    'y' : y
+                } 
+            }
+        """
         for centroid_number in range(self.centroid_number):
             x = random.randint(-300, 300)
             y = random.randint(-300, 300)
@@ -45,10 +54,22 @@ class KMeans():
             
         euclidian_distance = sqrt(sum)
         
-        return round(euclidian_distance, 4)
+        return round(euclidian_distance)
 
 
     def group_points_to_clusters(self):
+        """
+        cluster = {
+            cluster_number : 
+            {
+                'x' : x,
+                'y' : y
+            },
+            
+            {}, etc
+        }
+        """
+        
         clusters = defaultdict(list)
         for point in self.points:
             min_distance = sys.maxsize
@@ -69,36 +90,52 @@ class KMeans():
         
         return clusters
                 
-    def get_weight_center(self, points):
+    def get_weight_center(self, cluster):
         
         x_weight_center = 0
         y_weight_center = 0 
-        
-        for point in points:
+
+        for point in cluster:
             x_weight_center += point['x']
             y_weight_center += point['y']
+
+        x_weight_center /= len(cluster)
+        y_weight_center /= len(cluster)
         
-        x_weight_center /= len(points)
-        y_weight_center /= len(points)
-        
-        new_centroid = {'x' :round(x_weight_center, 4), 'y' : round(y_weight_center, 4)}
+        new_centroid = {'x' :round(x_weight_center), 'y' : round(y_weight_center)}
         
         return new_centroid
    
-         
     def modify_centroids_coordinates(self):
-        for centroid_number in range(self.centroid_number):
-            cluster = self.clusters[centroid_number]
+        for index, centroid in enumerate(self.centroids):
+            cluster = self.clusters[index]
             new_centroid_coordinates = self.get_weight_center(cluster)
-            self.centroids[centroid_number] = new_centroid_coordinates
-            
+            centroid[index] = new_centroid_coordinates
+    
+    def get_convergenta(self, clusters):
+        suma = 0
+        for cluster in clusters:
+            suma += sum(point for point in cluster)
+        
+        return suma               
+     
+    def valid(self, clusters):
+        return self.get_convergenta(self.clusters) == self.get_convergenta(clusters)
+    
+    
     def main(self):
         self.clusters = self.group_points_to_clusters()
         self.modify_centroids_coordinates()
         
-        
+        while not self.valid(self.group_points_to_clusters()):
+            
+            
+            self.clusters = self.group_points_to_clusters()
+            self.modify_centroids_coordinates()
+            
+
 if __name__ == '__main__':
     kmeans = KMeans()
  
     kmeans.main()
-    print(kmeans.clusters)
+    #print(kmeans.clusters)
