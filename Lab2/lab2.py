@@ -1,8 +1,10 @@
 import random
 import sys
+import time
+
+from window_lab2 import Window
 from math import sqrt
 from collections import defaultdict
-import time
 
 
 class KMeans():
@@ -31,12 +33,14 @@ class KMeans():
                 
     def set_centroizi_coordinates(self):
         """
-            centroid = {
+            centroids = [
                 number : {
                     'x' : x,
                     'y' : y
-                } 
-            }
+                },
+                number : {},
+                number : {}
+            ]
         """
         for centroid_number in range(self.centroid_number):
             x = random.randint(-300, 300)
@@ -137,6 +141,18 @@ class KMeans():
 
 if __name__ == '__main__':
     kmeans = KMeans()
- 
+    window = Window()
+    
     kmeans.main()
-    #print(kmeans.clusters)
+    x = []
+    y = []
+    for index, centroid in enumerate(kmeans.centroids):
+        coords = centroid[index]
+        x.append(coords['x'])
+        y.append(coords['y'])
+    
+    print(kmeans.centroid_number)
+    
+    window.draw_points(x, y, 'red', 50)
+    window.open_window()
+    

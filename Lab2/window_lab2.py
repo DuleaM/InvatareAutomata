@@ -1,31 +1,46 @@
 
 import matplotlib.pyplot as plt
 
-x = []
-y = []
-
-fig, ax = plt.subplots(figsize=(3, 3))
-ax.set_aspect('equal')
-
-ax.set_xlim(-300, 300)
-ax.set_ylim(-300, 300)
-
-ax.set_xticks([])  
-ax.set_yticks([])
-
-
-with open('output.txt', 'r') as file:
-    for line in file:
-        elements = line.split()
-        x.append(int(elements[0])) 
-        y.append(int(elements[1]))
+class Window:
+    
+    x = []
+    y = []
+    fig, ax = plt.subplots(figsize=(3, 3))
+    
+    def __init__(self):
         
-    ax.scatter(x, y, color='black', marker='o', s=1)
+        self.ax.set_aspect('equal')
 
+        self.ax.set_xlim(-300, 300)
+        self.ax.set_ylim(-300, 300)
 
-plt.grid(True)
-plt.show()
+        self.ax.set_xticks([])  
+        self.ax.set_yticks([])
+        
+        self.__get_points()
+        
+    def __get_points(self):
+        with open('output.txt', 'r') as file:
+            for line in file:
+                elements = line.split()
+                self.x.append(int(elements[0])) 
+                self.y.append(int(elements[1]))
+                
 
+    def draw_points(self, x=[], y=[], color='black', thickness=1):
+        self.ax.scatter(x, y, color=color, marker='o', s=thickness)
+        plt.draw()
+        
+    def open_window(self, points=True):
+        if points:
+            self.draw_points(x=self.x, y=self.y)
+        
+        plt.grid(True)
+        plt.show()
+    
+if __name__ == '__main__':
+    window = Window()
+    window.open_window()
 
 
 
