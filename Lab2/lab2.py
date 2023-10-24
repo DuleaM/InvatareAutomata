@@ -67,8 +67,8 @@ class KMeans():
             point['distance'] = min_distance
             clusters[target_centroid].append(point)
         
-        self.clusters = clusters
-            
+        return clusters
+                
     def get_weight_center(self, points):
         
         x_weight_center = 0
@@ -93,7 +93,7 @@ class KMeans():
             self.centroids[centroid_number] = new_centroid_coordinates
             
     def main(self):
-        self.group_points_to_clusters()
+        self.clusters = self.group_points_to_clusters()
         self.modify_centroids_coordinates()
         
         
