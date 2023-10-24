@@ -98,6 +98,10 @@ class KMeans():
                 
     def get_weight_center(self, cluster):
         
+        if len(cluster) == 0:
+            print(f'cluster {cluster} does not have any points assigned')
+            return None
+        
         x_weight_center = 0
         y_weight_center = 0 
 
@@ -134,7 +138,6 @@ class KMeans():
         self.modify_centroids_coordinates()
         
         while not self.valid(self.group_points_to_clusters()):
-            
             self.clusters = self.group_points_to_clusters()
             self.modify_centroids_coordinates()
             
