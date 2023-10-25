@@ -4,11 +4,17 @@ import matplotlib.pyplot as plt
 class Window:
     
     colors = {
+        0 : '',
         1 : 'red',
         2 : 'yellow', 
         3 : 'green',
         4 : 'blue',
-        5 : 'purple'
+        5 : 'purple',
+        6 : 'cyan',
+        7 : 'magenta',
+        8 : 'orange',
+        9 : '#33FFC8',
+        10 : '#FF33B1'
     }
     
     x = []
@@ -38,7 +44,7 @@ class Window:
 
     def draw_points(self, x=[], y=[], color='black', thickness=1 ,label=None):
         self.ax.scatter(x, y, color=color, marker='o', s=thickness, label = label)
-        plt.draw()
+        self.ax.legend(loc='upper left')
         
     def open_window(self, points=True):
         if points:
