@@ -1,3 +1,4 @@
+from cProfile import label
 import random
 import sys
 import time
@@ -9,10 +10,12 @@ from collections import defaultdict
 
 class KMeans():
     
+    window = Window()
     centroid_number = random.randint(2, 10)
     points = []
     centroids = []
     clusters = {}
+    epoca = 0
     
     def __init__(self):
         self.get_coordinates()
@@ -121,7 +124,8 @@ class KMeans():
             cluster = self.clusters[index]
             new_centroid_coordinates = self.get_weight_center(cluster)
             centroid[index] = new_centroid_coordinates
-    
+            self.epoca += 1
+
     def get_convergenta(self, clusters):
         suma = 0
         for points in clusters.values():
@@ -137,25 +141,32 @@ class KMeans():
         self.clusters = self.group_points_to_clusters()
         self.modify_centroids_coordinates()
         
+        self.create_points()
+        
         while not self.valid(self.group_points_to_clusters()):
             self.clusters = self.group_points_to_clusters()
             self.modify_centroids_coordinates()
-            
+            self.create_points()
+    
+    def create_points(self):
+        x = []
+        y = []
+        
+        for index, centroid in enumerate(self.centroids):
+            coords = centroid[index]
+            x.append(coords['x'])
+            y.append(coords['y'])
+        
+        self.window.draw_points(x, y, self.window.colors[self.epoca], 50, label=f'Epoca {self.epoca}')
 
 if __name__ == '__main__':
     kmeans = KMeans()
-    window = Window()
     
     kmeans.main()
-    x = []
-    y = []
-    for index, centroid in enumerate(kmeans.centroids):
-        coords = centroid[index]
-        x.append(coords['x'])
-        y.append(coords['y'])
-    
+          
     print(kmeans.centroid_number)
+    print(kmeans.epoca)
+        
+    kmeans.window.open_window()
     
-    window.draw_points(x, y, 'red', 50)
-    window.open_window()
-    
+   

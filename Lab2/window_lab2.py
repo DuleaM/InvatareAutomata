@@ -3,8 +3,17 @@ import matplotlib.pyplot as plt
 
 class Window:
     
+    colors = {
+        1 : 'red',
+        2 : 'yellow', 
+        3 : 'green',
+        4 : 'blue',
+        5 : 'purple'
+    }
+    
     x = []
     y = []
+    
     fig, ax = plt.subplots(figsize=(3, 3))
     
     def __init__(self):
@@ -27,8 +36,8 @@ class Window:
                 self.y.append(int(elements[1]))
                 
 
-    def draw_points(self, x=[], y=[], color='black', thickness=1):
-        self.ax.scatter(x, y, color=color, marker='o', s=thickness)
+    def draw_points(self, x=[], y=[], color='black', thickness=1 ,label=None):
+        self.ax.scatter(x, y, color=color, marker='o', s=thickness, label = label)
         plt.draw()
         
     def open_window(self, points=True):
@@ -37,6 +46,7 @@ class Window:
         
         plt.grid(True)
         plt.show()
+        plt.legend()
     
 if __name__ == '__main__':
     window = Window()
