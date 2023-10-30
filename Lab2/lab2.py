@@ -2,6 +2,7 @@ from cProfile import label
 import enum
 import random
 import sys
+import time
 
 from window_lab2 import Window, plt
 from math import sqrt
@@ -55,9 +56,7 @@ class KMeans():
     
     
     def get_euclidian_distance(self, point, centroid):
-        if centroid == None:
-            return
-        
+
         sum = 0
         for point_coordinate, centroid_coordinate in zip(point.keys(), centroid.keys()):
             sum += (point[point_coordinate] - centroid[centroid_coordinate]) ** 2
@@ -148,30 +147,30 @@ class KMeans():
     def main(self):
         self.clusters = self.group_points_to_clusters()
         self.modify_centroids_coordinates()
-        
+        self.create_points()
         
         while not self.valid(self.group_points_to_clusters()):
             self.clusters = self.group_points_to_clusters()
             self.modify_centroids_coordinates()
-    
-        self.create_points()
+            self.create_points()
+            
+        self.window.open_window()
 
 
     def create_points(self):
-         
         
         for index, centroid in enumerate(self.centroids):
             x = []
             y = []
             
             coords = centroid[index]
-            coords['color'] = self.window.colors[index]
+            color = self.window.colors[index]
             plt.text(coords['x'], coords['y'], str(index), fontsize=10, ha='center', color='red')
             
             x.append(coords['x'])
             y.append(coords['y'])
         
-            self.window.draw_points(x, y, coords['color'], 50, label=f'Centroid {index}')
+            self.window.draw_points(x, y, color, 50, label=f'Centroid {index}')
         
         for index, cluster in self.clusters.items():
             x = []
@@ -190,6 +189,4 @@ if __name__ == '__main__':
     print(f'Centroids : {kmeans.centroid_number + 1}')
     print(f'Epoci: {kmeans.epoca - 1}')
         
-    kmeans.window.open_window()
-    
    

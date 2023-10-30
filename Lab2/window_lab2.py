@@ -1,5 +1,6 @@
 
 import matplotlib.pyplot as plt
+import time
 
 class Window:
     
@@ -46,9 +47,8 @@ class Window:
         self.ax.legend(loc='upper left')
         
     def open_window(self):
- 
-        plt.grid(True)
         plt.show()
+        plt.grid(True)
         plt.legend()
     
 if __name__ == '__main__':
