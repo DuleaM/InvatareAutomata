@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 class Window:
     
     colors = {
-        0 : '',
+        0 : '#FF33B1',
         1 : 'red',
         2 : 'yellow', 
         3 : 'green',
@@ -13,8 +13,7 @@ class Window:
         6 : 'cyan',
         7 : 'magenta',
         8 : 'orange',
-        9 : '#33FFC8',
-        10 : '#FF33B1'
+        9 : '#33FFC8'
     }
     
     x = []
@@ -46,10 +45,8 @@ class Window:
         self.ax.scatter(x, y, color=color, marker='o', s=thickness, label = label)
         self.ax.legend(loc='upper left')
         
-    def open_window(self, points=True):
-        if points:
-            self.draw_points(x=self.x, y=self.y)
-        
+    def open_window(self):
+ 
         plt.grid(True)
         plt.show()
         plt.legend()
