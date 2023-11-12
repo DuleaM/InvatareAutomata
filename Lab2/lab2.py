@@ -1,8 +1,6 @@
 from cProfile import label
-import enum
 import random
 import sys
-import time
 
 from window_lab2 import Window, plt
 from math import sqrt
@@ -87,8 +85,6 @@ class KMeans():
             target_centroid = -1
             
             for centroid in self.centroids:
-                if centroid == None:
-                    continue
                 
                 centroid_number = list(centroid.keys())[0]
                 centroid_coords = list(centroid.values())[0]
