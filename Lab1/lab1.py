@@ -33,7 +33,7 @@ class GaussAI:
         return gauss_result
 
     def is_valid(self, gauss_value):
-        probability = round(random.uniform(0, 1), 3)
+        probability = round(random.uniform(0, 1), 4)
 
         return gauss_value > probability
 

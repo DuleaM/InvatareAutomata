@@ -44,6 +44,7 @@ class KMeans():
                 number : {}
             ]
         """
+        
         for centroid_number in range(self.centroid_number):
             x = random.randint(-300, 300)
             y = random.randint(-300, 300)
@@ -51,8 +52,7 @@ class KMeans():
             coords = {'x' : x, 'y' : y}
             centroid = {centroid_number : coords}
             self.centroids.append(centroid)
-    
-    
+        
     def get_euclidian_distance(self, point, centroid):
 
         sum = 0
@@ -64,6 +64,14 @@ class KMeans():
         return round(euclidian_distance)
 
 
+    def put_centroid_in_center(self):
+        x = 0
+        y = 0
+        
+        coords = {'x' : x, 'y' : y}
+        
+        return coords
+    
     def group_points_to_clusters(self):
         """
         cluster = {
@@ -98,13 +106,14 @@ class KMeans():
             point['distance'] = min_distance
             clusters[target_centroid].append(point)
         
+        print(len(clusters))
         return clusters
-                
+        
     def get_weight_center(self, cluster):
         
         if len(cluster) == 0:
             print(f'cluster {cluster} does not have any points assigned')
-            return None
+            return []
         
         x_weight_center = 0
         y_weight_center = 0 
@@ -120,15 +129,18 @@ class KMeans():
         
         return new_centroid
    
-    def modify_centroids_coordinates(self):
+    def modify_centroids_cogoordinates(self):
         for index, centroid in enumerate(self.centroids):
             cluster = self.clusters[index]
-            new_centroid_coordinates = self.get_weight_center(cluster)
-            centroid[index] = new_centroid_coordinates
             
-            self.epoca += 1
-            
+            if len(cluster) == 0:
+                centroid[index] = self.put_centroid_in_center()
+            else:
+                new_centroid_coordinates = self.get_weight_center(cluster)
+                centroid[index] = new_centroid_coordinates
 
+        self.epoca += 1
+            
     def get_convergenta(self, clusters):
         suma = 0
         for points in clusters.values():
@@ -137,24 +149,15 @@ class KMeans():
         return suma               
      
     def valid(self, clusters):
-        return self.get_convergenta(self.clusters) == self.get_convergenta(clusters)
-    
-    
-    def main(self):
-        self.clusters = self.group_points_to_clusters()
-        self.modify_centroids_coordinates()
-        self.create_points()
-        
-        while not self.valid(self.group_points_to_clusters()):
-            self.clusters = self.group_points_to_clusters()
-            self.modify_centroids_coordinates()
-            self.create_points()
-            
-        self.window.open_window()
-
+        conv1 = self.get_convergenta(self.clusters)
+        conv2 = self.get_convergenta(clusters)
+        print(conv1, conv2)
+        return conv1 == conv2
 
     def create_points(self):
+        self.window.ax.clear()
         
+            
         for index, centroid in enumerate(self.centroids):
             x = []
             y = []
@@ -171,12 +174,39 @@ class KMeans():
         for index, cluster in self.clusters.items():
             x = []
             y = []
+            
             for point in cluster:
                 x.append(point['x'])
                 y.append(point['y'])
                 
             self.window.draw_points(x, y, self.window.colors[index])
         
+        
+    def main(self):
+        plt.show(block=False)
+
+        self.clusters = self.group_points_to_clusters()
+        self.create_points()
+        plt.pause(2)
+        
+        self.modify_centroids_coordinates()
+        next_clusters = self.group_points_to_clusters()
+        self.create_points()
+        plt.pause(2)
+
+        while not self.valid(next_clusters):
+            self.modify_centroids_coordinates()
+            
+            self.clusters = next_clusters
+            self.create_points()
+            
+            next_clusters = self.group_points_to_clusters()
+            
+            plt.pause(2)
+
+        plt.show()
+    
+            
 if __name__ == '__main__':
     kmeans = KMeans()
     

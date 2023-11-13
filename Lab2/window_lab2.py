@@ -43,11 +43,13 @@ class Window:
                 
 
     def draw_points(self, x=[], y=[], color='black', thickness=1 ,label=None):
+        
         self.ax.scatter(x, y, color=color, marker='o', s=thickness, label = label)
         self.ax.legend(loc='upper left')
         
+        
     def open_window(self):
-        plt.show()
+        plt.show(block=False)
         plt.grid(True)
         plt.legend()
     
