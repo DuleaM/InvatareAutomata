@@ -1,4 +1,4 @@
-from window_lab3 import Window
+from window_lab3 import Window, plt
 
 class SOM:
     
@@ -41,11 +41,11 @@ class SOM:
         return neurons
 
     def draw_plot(self):
+        self.window.clear_window()
         self.window.set_points(self.points)
         self.window.set_neurons(self.neurons)
         self.window.draw_lines(self.neurons)
-        
-        
+
     def main(self):
         self.window.open_window(block=False)
         

@@ -60,4 +60,6 @@ class Window:
     
     def open_window(self, block=True):
         plt.show(block=block)
-    
+        
+    def clear_window(self):
+        self.window.ax.clear()
