@@ -1,3 +1,4 @@
+import sys
 from math import sqrt
 from window_lab3 import Window
 
@@ -59,33 +60,36 @@ class SOM:
         Returns:
             float: the distance between the point and the neuron
         """
-        
+
         xs = (point['x'] - neuron['x']) ** 2
         ys = (point['y'] - neuron['y']) ** 2
         
         return sqrt(xs + ys)
 
-    def get_closest_neuron(self):
+    def replace_closest_neuron(self):
         
-        for point in self.points():
-            min_distance = -1
-            for neuron in self.neurons():
-                distance = self.get_distance(point, neuron)
+        for point in self.points:
+            min_distance = sys.maxsize
+            closest_neuron = None
+            
+            for row in self.neurons:
+                for neuron in row:
+                    distance = self.get_distance(point, neuron)
                 
-                if distance < min_distance:
-                    min_distance = distance
-                    closest_neuron = neuron
+                    if distance < min_distance:
+                        min_distance = distance
+                        closest_neuron = neuron
 
             self.replace_neuron(closest_neuron)
-    
-    def get_
+
     def replace_neuron(self, neuron):
-        pass
+        print(neuron)
     
     def main(self):
         self.window.open_window(block=False)
         
         self.draw_plot(refresh=True)
+        self.replace_closest_neuron()
         
         self.window.open_window()
 
