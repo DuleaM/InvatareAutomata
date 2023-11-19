@@ -22,16 +22,31 @@ class Window:
         self.ax.set_yticks([])
 
     def set_points(self, points):
+        x = []
+        y = []
+        
         for point in points:
             self.x.append(point['x'])
             self.y.append(point['y'])
 
-    def __draw_points(self):
-        self.ax.scatter(self.x, self.y, color='black', marker='o', s=1)
+        self.draw_points(x, y, color='black', strength=1)
+
+    def set_neurons(self, neurons):
+        x = []
+        y = []
+        
+        for row in neurons:
+            for neuron in row:
+                self.x.append(neuron['x'])
+                self.y.append(neuron['y'])
+
+        self.draw_points(x, y, color='red', strength=10)
+
+    def draw_points(self, x = [], y = [], color='black', strength=1):
+        self.ax.scatter(x=x, y=y, color=color, marker='o', s=strength)
         self.ax.legend(loc='upper left')
     
     def open_window(self):
-        self.__draw_points()
         plt.show()
         plt.grid(True)
         plt.legend()
