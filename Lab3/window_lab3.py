@@ -14,8 +14,7 @@ class Window:
 
         self.ax.set_xticks([])  
         self.ax.set_yticks([])
-        
-        self.__set_points()
+
 
     def set_points(self, points):
         for point in points:
@@ -27,8 +26,9 @@ class Window:
         self.ax.legend(loc='upper left')
     
     def open_window(self):
+        self.draw_points()
         plt.show()
         plt.grid(True)
         plt.legend()
-        self.draw_points()
+        
         

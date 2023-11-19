@@ -8,7 +8,6 @@ class SOM:
         #setting up the window
         self.window = Window()
         self.window.set_points(self.points)
-        self.window.open_window()
 
     def __get_coordinates(self): 
         points = []
@@ -24,6 +23,10 @@ class SOM:
         
         return points
 
+    def main(self):
+        self.window.open_window()
+
+
 if __name__ == '__main__':
     som = SOM()
-    print(som.points)
+    som.main()
