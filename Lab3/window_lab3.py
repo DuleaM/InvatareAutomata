@@ -40,12 +40,24 @@ class Window:
                 x.append(neuron['x'])
                 y.append(neuron['y'])
 
-        self.draw_points(x, y, color='red', strength=10, label='Neurons')
+        self.draw_points(x, y, color='red', strength=15, label='Neurons')
+
+    def draw_lines(self, neurons):
+        for row in neurons:
+            xs = []
+            ys = []
+            
+            for neuron in row:
+                xs.append(neuron['x'])
+                ys.append(neuron['y'])
+            
+            plt.plot(xs, ys, color='blue', linewidth=0.5)    
+            plt.plot(ys, xs, color='blue', linewidth=0.5) 
 
     def draw_points(self, x = [], y = [], color='black', strength=1, label=''):
         self.ax.scatter(x=x, y=y, color=color, marker='o', s=strength, label=label)
         self.ax.legend(color, loc='upper left')
-
-    def open_window(self):
-        plt.show()
-        plt.grid()
+    
+    def open_window(self, block=True):
+        plt.show(block=block)
+    

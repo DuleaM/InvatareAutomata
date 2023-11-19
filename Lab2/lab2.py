@@ -19,7 +19,7 @@ class KMeans():
     def __init__(self):
         self.get_coordinates()
         self.set_centroizi_coordinates()
- 
+
 
     def get_coordinates(self): 
         with open('output.txt', 'r') as file:
@@ -31,7 +31,7 @@ class KMeans():
                 coords = {'x' : x, 'y' : y}
                 
                 self.points.append(coords)
-                           
+
     def set_centroizi_coordinates(self):
         """
             centroids = [
@@ -125,7 +125,7 @@ class KMeans():
         new_centroid = {'x' :round(x_weight_center), 'y' : round(y_weight_center)}
         
         return new_centroid
-   
+
     def modify_centroids_coordinates(self):
         for index, centroid in enumerate(self.centroids):
             cluster = self.clusters[index]
@@ -149,7 +149,7 @@ class KMeans():
         
         print(suma)
         return suma               
-     
+
     def valid(self, clusters):
         
         conv1 = self.get_convergenta(self.clusters)
@@ -224,7 +224,6 @@ class KMeans():
             plt.pause(2)
             
             next_clusters = self.group_points_to_clusters()
-            
 
         plt.show()
     
@@ -233,8 +232,7 @@ if __name__ == '__main__':
     kmeans = KMeans()
     
     kmeans.main()
-          
+
     print(f'Centroids : {kmeans.centroid_number + 1}')
     print(f'Epoci: {kmeans.epoca}')
         
-   

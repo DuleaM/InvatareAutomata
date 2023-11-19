@@ -40,9 +40,17 @@ class SOM:
         
         return neurons
 
-    def main(self):
+    def draw_plot(self):
         self.window.set_points(self.points)
         self.window.set_neurons(self.neurons)
+        self.window.draw_lines(self.neurons)
+        
+        
+    def main(self):
+        self.window.open_window(block=False)
+        
+        self.draw_plot()
+        
         self.window.open_window()
 
 if __name__ == '__main__':
