@@ -9,7 +9,6 @@ class SOM:
         # setting up the coordinates
         self.points = self.__get_coordinates()
         self.neurons = self.__get_neurons()
-        
 
     def __get_coordinates(self): 
         points = []

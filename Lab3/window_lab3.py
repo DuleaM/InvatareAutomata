@@ -29,7 +29,7 @@ class Window:
             x.append(point['x'])
             y.append(point['y'])
 
-        self.draw_points(x, y, color='black', strength=1)
+        self.draw_points(x, y, color='black', strength=1, label='Points')
 
     def set_neurons(self, neurons):
         x = []
@@ -40,11 +40,12 @@ class Window:
                 x.append(neuron['x'])
                 y.append(neuron['y'])
 
-        self.draw_points(x, y, color='red', strength=10)
+        self.draw_points(x, y, color='red', strength=10, label='Neurons')
 
-    def draw_points(self, x = [], y = [], color='black', strength=1):
-        self.ax.scatter(x=x, y=y, color=color, marker='o', s=strength)
-    
+    def draw_points(self, x = [], y = [], color='black', strength=1, label=''):
+        self.ax.scatter(x=x, y=y, color=color, marker='o', s=strength, label=label)
+        self.ax.legend(color, loc='upper left')
+
     def open_window(self):
         plt.show()
         plt.grid()
