@@ -3,11 +3,13 @@ from window_lab3 import Window
 class SOM:
     
     def __init__(self) -> None:
-        self.points = self.__get_coordinates()
-        self.neurons = self.__get_neurons()
         # setting up the window
         self.window = Window()
-        self.window.set_points(self.points)
+        
+        # setting up the coordinates
+        self.points = self.__get_coordinates()
+        self.neurons = self.__get_neurons()
+        
 
     def __get_coordinates(self): 
         points = []
@@ -26,11 +28,11 @@ class SOM:
     def __get_neurons(self):
         neurons = []
 
-        for row in range(10):
+        for row in range(   10):
             r = []
             for col in range(10):
-                x = -300 + col * 60  # Adjust the scaling factor as needed
-                y = -300 + row * 60  # Adjust the scaling factor as needed
+                x = 30 + self.window.x_min + col * 60  # Adjust the scaling factor as needed
+                y = 30 + self.window.y_min + row * 60  # Adjust the scaling factor as needed
                 
                 coords = {'x': x, 'y': y}
                 r.append(coords)
@@ -40,16 +42,9 @@ class SOM:
         return neurons
 
     def main(self):
+        self.window.set_points(self.points)
+        self.window.set_neurons(self.neurons)
         self.window.open_window()
-
-
-if __name__ == '__main__':
-    som = SOM()
-    som.main()
-        
-    def main(self):
-        self.window.open_window()
-
 
 if __name__ == '__main__':
     som = SOM()

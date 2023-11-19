@@ -26,8 +26,8 @@ class Window:
         y = []
         
         for point in points:
-            self.x.append(point['x'])
-            self.y.append(point['y'])
+            x.append(point['x'])
+            y.append(point['y'])
 
         self.draw_points(x, y, color='black', strength=1)
 
@@ -37,16 +37,14 @@ class Window:
         
         for row in neurons:
             for neuron in row:
-                self.x.append(neuron['x'])
-                self.y.append(neuron['y'])
+                x.append(neuron['x'])
+                y.append(neuron['y'])
 
         self.draw_points(x, y, color='red', strength=10)
 
     def draw_points(self, x = [], y = [], color='black', strength=1):
         self.ax.scatter(x=x, y=y, color=color, marker='o', s=strength)
-        self.ax.legend(loc='upper left')
     
     def open_window(self):
         plt.show()
-        plt.grid(True)
-        plt.legend()
+        plt.grid()
