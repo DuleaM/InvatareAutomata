@@ -31,8 +31,7 @@ class KMeans():
                 coords = {'x' : x, 'y' : y}
                 
                 self.points.append(coords)
-                
-                
+                           
     def set_centroizi_coordinates(self):
         """
             centroids = [
@@ -58,11 +57,10 @@ class KMeans():
         sum = 0
         for point_coordinate, centroid_coordinate in zip(point.keys(), centroid.keys()):
             sum += (point[point_coordinate] - centroid[centroid_coordinate]) ** 2
-            
+
         euclidian_distance = sqrt(sum)
         
         return round(euclidian_distance)
-
 
     def put_centroid_in_center(self):
         x = 0
@@ -106,7 +104,6 @@ class KMeans():
             point['distance'] = min_distance
             clusters[target_centroid].append(point)
         
-        print(len(clusters))
         return clusters
         
     def get_weight_center(self, cluster):
@@ -129,7 +126,7 @@ class KMeans():
         
         return new_centroid
    
-    def modify_centroids_cogoordinates(self):
+    def modify_centroids_coordinates(self):
         for index, centroid in enumerate(self.centroids):
             cluster = self.clusters[index]
             
@@ -143,35 +140,50 @@ class KMeans():
             
     def get_convergenta(self, clusters):
         suma = 0
-        for points in clusters.values():
-            suma += sum(point['distance'] for point in points)
+    
+        # for points in clusters.values():
+        #     suma += sum(point['distance'] for point in points)
         
+        for point in self.points:
+            suma += point['distance']
+        
+        print(suma)
         return suma               
      
     def valid(self, clusters):
+        
         conv1 = self.get_convergenta(self.clusters)
         conv2 = self.get_convergenta(clusters)
+        
         print(conv1, conv2)
+        
+        print(f'Epoca {self.epoca - 1}')
+        for index, cluster in clusters.items():
+            print(f'{index} {len(cluster)}')
+            
+        print(f'\nEpoca {self.epoca}')
+        for index, cluster in self.clusters.items():
+            print(f'{index} {len(cluster)}')
+        
         return conv1 == conv2
 
-    def create_points(self):
+    def create_points(self, clusters):
         self.window.ax.clear()
         
-            
         for index, centroid in enumerate(self.centroids):
             x = []
             y = []
             
             coords = centroid[index]
             color = self.window.colors[index]
-            plt.text(coords['x'], coords['y'], str(index), fontsize=10, ha='center', color='red')
+            plt.text(coords['x'], coords['y'], str(index), fontsize=10, ha='center', color='blue')
             
             x.append(coords['x'])
             y.append(coords['y'])
         
             self.window.draw_points(x, y, color, 50, label=f'Centroid {index}')
         
-        for index, cluster in self.clusters.items():
+        for index, cluster in clusters.items():
             x = []
             y = []
             
@@ -183,26 +195,36 @@ class KMeans():
         
         
     def main(self):
+        
         plt.show(block=False)
-
+        
         self.clusters = self.group_points_to_clusters()
-        self.create_points()
+        self.create_points(self.clusters)
         plt.pause(2)
         
         self.modify_centroids_coordinates()
         next_clusters = self.group_points_to_clusters()
-        self.create_points()
+        self.create_points(next_clusters)
         plt.pause(2)
-
+        self.valid(next_clusters)
+        
+        self.clusters = next_clusters
+        self.modify_centroids_coordinates()
+        next_clusters = self.group_points_to_clusters()
+        self.create_points(next_clusters)
+        plt.pause(2)
+        self.valid(next_clusters)
+        
+        
         while not self.valid(next_clusters):
             self.modify_centroids_coordinates()
             
             self.clusters = next_clusters
-            self.create_points()
+            self.create_points(self.clusters)
+            plt.pause(2)
             
             next_clusters = self.group_points_to_clusters()
             
-            plt.pause(2)
 
         plt.show()
     
@@ -213,6 +235,6 @@ if __name__ == '__main__':
     kmeans.main()
           
     print(f'Centroids : {kmeans.centroid_number + 1}')
-    print(f'Epoci: {kmeans.epoca - 1}')
+    print(f'Epoci: {kmeans.epoca}')
         
    
