@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 
 class Window:
-    
     x = []
     y = []
     fig, ax = plt.subplots(figsize=(3, 3))
@@ -16,20 +15,20 @@ class Window:
         self.ax.set_xticks([])  
         self.ax.set_yticks([])
         
-        self.__get_points()
+        self.__set_points()
 
-    def __get_points(self):
-        with open('output.txt', 'r') as file:
-            for line in file:
-                elements = line.split()
-                self.x.append(int(elements[0]))
-                self.y.append(int(elements[1]))
+    def set_points(self, points):
+        for point in points:
+            self.x.append(point['x'])
+            self.y.append(point['y'])
 
+    def draw_points(self):
+        self.ax.scatter(self.x, self.y, color='black', marker='o', s=1)
+        self.ax.legend(loc='upper left')
+    
     def open_window(self):
         plt.show()
         plt.grid(True)
         plt.legend()
-
-if __name__ == '__main__':
-    window = Window()
-    window.open_window()
+        self.draw_points()
+        

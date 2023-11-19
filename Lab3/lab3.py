@@ -1,9 +1,15 @@
+from window_lab3 import Window
+
 class SOM:
     
     def __init__(self) -> None:
         self.points = self.__get_coordinates()
-
         
+        #setting up the window
+        self.window = Window()
+        self.window.set_points(self.points)
+        self.window.open_window()
+
     def __get_coordinates(self): 
         points = []
         with open('output.txt', 'r') as file:
@@ -17,7 +23,7 @@ class SOM:
                 points.append(coords)
         
         return points
-        
+
 if __name__ == '__main__':
     som = SOM()
     print(som.points)
