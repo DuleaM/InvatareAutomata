@@ -2,8 +2,14 @@ import sys
 from math import sqrt
 from window_lab3 import Window
 
+
+
 class SOM:
+    """LEGEND
     
+    pondere = pozitia unui neuron in spatiul de reprezentare
+    vector de intrare = punctul din spatiul de intrare
+    """
     def __init__(self) -> None:
         # setting up the window
         self.window = Window()
@@ -43,6 +49,12 @@ class SOM:
         return neurons
 
     def draw_plot(self, refresh=False):
+        """Draw the plot with the points and neurons
+
+        Args:
+            refresh (bool, optional): If set to true, the old plot will be deleted. Defaults to False.
+        """
+        
         if refresh:
             self.window.clear_window()
             
@@ -67,7 +79,7 @@ class SOM:
         return sqrt(xs + ys)
 
     def replace_closest_neuron(self):
-        
+
         for point in self.points:
             min_distance = sys.maxsize
             closest_neuron = None
