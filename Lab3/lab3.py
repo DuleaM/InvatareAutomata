@@ -1,4 +1,5 @@
-from window_lab3 import Window, plt
+from math import sqrt
+from window_lab3 import Window
 
 class SOM:
     
@@ -48,6 +49,39 @@ class SOM:
         self.window.set_neurons(self.neurons)
         self.window.draw_lines(self.neurons)
 
+    def get_distance(self, point, neuron):
+        """Get Euclidian Distance between a point and a neuron
+
+        Args:
+            point (dict): contains x and y of the point
+            neuron (dict): contains x and y of the neuron
+
+        Returns:
+            float: the distance between the point and the neuron
+        """
+        
+        xs = (point['x'] - neuron['x']) ** 2
+        ys = (point['y'] - neuron['y']) ** 2
+        
+        return sqrt(xs + ys)
+
+    def get_closest_neuron(self):
+        
+        for point in self.points():
+            min_distance = -1
+            for neuron in self.neurons():
+                distance = self.get_distance(point, neuron)
+                
+                if distance < min_distance:
+                    min_distance = distance
+                    closest_neuron = neuron
+
+            self.replace_neuron(closest_neuron)
+    
+    def get_
+    def replace_neuron(self, neuron):
+        pass
+    
     def main(self):
         self.window.open_window(block=False)
         
