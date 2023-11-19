@@ -4,7 +4,7 @@ class SOM:
     
     def __init__(self) -> None:
         self.points = self.__get_coordinates()
-        
+        self.neurons = []
         #setting up the window
         self.window = Window()
         self.window.set_points(self.points)
@@ -23,6 +23,8 @@ class SOM:
         
         return points
 
+    def __get_neurons():
+        
     def main(self):
         self.window.open_window()
 
