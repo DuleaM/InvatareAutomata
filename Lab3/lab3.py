@@ -30,8 +30,8 @@ class SOM:
         for row in range(10):
             r = []
             for col in range(10):
-                x = 30 + self.window.x_min + col * 60  # Adjust the scaling factor as needed
-                y = 30 + self.window.y_min + row * 60  # Adjust the scaling factor as needed
+                x = 30 + self.window.x_min + col * 60 
+                y = 30 + self.window.y_min + row * 60
                 
                 coords = {'x': x, 'y': y}
                 r.append(coords)

@@ -62,4 +62,4 @@ class Window:
         plt.show(block=block)
         
     def clear_window(self):
-        self.window.ax.clear()
+        self.ax.clear()
