@@ -28,6 +28,7 @@ class SOM:
         self.neurons = self.__get_neurons()
 
         # setting up the other vars
+        self.length = 10 # range of matrix
         self.N = 100 #total number of steps
         self.T = 1 #step
         
@@ -48,9 +49,9 @@ class SOM:
     def __get_neurons(self):
         neurons = []
 
-        for row in range(10):
+        for row in range(self.length):
             r = []
-            for col in range(10):
+            for col in range(self.length):
                 x = 30 + self.window.x_min + col * 60 
                 y = 30 + self.window.y_min + row * 60
                 
@@ -113,21 +114,25 @@ class SOM:
     def update_point(self, winner, point):
         pass
     
-    def get_neighbourhood(self):
-        neighbourhood_1 = []
-        neighbourhood_2 = []
+    def get_neighbourhood(self, x, y):
+        coeficient = self.get_afla_T()
         
-        return neighbourhood_1, neighbourhood_2
+        height = int(x + coeficient) 
+        width = int(y + coeficient)
+
+        
+    def __normalizare(self, n):
+        pass
     
     def get_afla_T(self):
         return 0.6 * math.pow(math.e, - (self.T / self.N))
     
     def get_neighbour_T(self):
-        return 6,1 * math.pow(math.e, - (self.T / self.N)) + 1
+        return 6.1 * math.pow(math.e, - (self.T / self.N)) + 1
 
     def main(self):
         self.window.open_window(block=False)
-        
+            
         self.draw_plot(refresh=True)
         self.replace_closest_neuron()
         
@@ -137,4 +142,4 @@ if __name__ == '__main__':
     som = SOM()
     som.main()
     
-    print(som.get_afla_t())
+    som.get_neighbourhood()
