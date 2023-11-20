@@ -1,5 +1,5 @@
 import sys
-from math import sqrt
+import math
 from window_lab3 import Window
 
 
@@ -9,6 +9,15 @@ class SOM:
     
     pondere = pozitia unui neuron in spatiul de reprezentare
     vector de intrare = punctul din spatiul de intrare
+    alfa(t) = coeficientul de invatare la pasul t
+    calculul vecinatatii ->
+    
+    N -> este dat de noi ?
+    
+    
+    calculam prima data invingator intre neuron si punct
+    dupa mutam neuronul vecin cu aceeasi formula dupa neuronul invingator
+    vecin se considera orice punct din domeniul [i-v, i+v] şi [j-v, j+v], unde V
     """
     def __init__(self) -> None:
         # setting up the window
@@ -18,6 +27,10 @@ class SOM:
         self.points = self.__get_coordinates()
         self.neurons = self.__get_neurons()
 
+        # setting up the other vars
+        self.N = 100 #total number of steps
+        self.T = 1 #step
+        
     def __get_coordinates(self): 
         points = []
         with open('output.txt', 'r') as file:
@@ -76,7 +89,7 @@ class SOM:
         xs = (point['x'] - neuron['x']) ** 2
         ys = (point['y'] - neuron['y']) ** 2
         
-        return sqrt(xs + ys)
+        return math.sqrt(xs + ys)
 
     def replace_closest_neuron(self):
 
@@ -95,8 +108,23 @@ class SOM:
             self.replace_neuron(closest_neuron)
 
     def replace_neuron(self, neuron):
-        print(neuron)
+        pass
     
+    def update_point(self, winner, point):
+        pass
+    
+    def get_neighbourhood(self):
+        neighbourhood_1 = []
+        neighbourhood_2 = []
+        
+        return neighbourhood_1, neighbourhood_2
+    
+    def get_afla_T(self):
+        return 0.6 * math.pow(math.e, - (self.T / self.N))
+    
+    def get_neighbour_T(self):
+        return 6,1 * math.pow(math.e, - (self.T / self.N)) + 1
+
     def main(self):
         self.window.open_window(block=False)
         
@@ -108,3 +136,5 @@ class SOM:
 if __name__ == '__main__':
     som = SOM()
     som.main()
+    
+    print(som.get_afla_t())

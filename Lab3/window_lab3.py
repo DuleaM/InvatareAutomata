@@ -55,8 +55,8 @@ class Window:
             plt.plot(ys, xs, color='blue', linewidth=0.5) 
 
     def draw_points(self, x = [], y = [], color='black', strength=1, label=''):
-        self.ax.scatter(x=x, y=y, color=color, marker='o', s=strength, label=label)
-        self.ax.legend(color, loc='upper left')
+        self.ax.scatter(x=x, y=y, color=color, marker='o', s=strength)
+        self.ax.legend(label, loc='upper left')
     
     def open_window(self, block=True):
         plt.show(block=block)
