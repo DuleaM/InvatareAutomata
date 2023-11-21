@@ -20,17 +20,18 @@ class SOM:
     vecin se considera orice punct din domeniul [i-v, i+v] şi [j-v, j+v], unde V
     """
     def __init__(self) -> None:
+        # setting up the other vars
+        self.length = 10 # range of matrix
+        self.N = 10 #total number of steps
+        self.T = 1 #step
+        
         # setting up the window
         self.window = Window()
         
         # setting up the coordinates
         self.points = self.__get_coordinates()
         self.neurons = self.__get_neurons()
-
-        # setting up the other vars
-        self.length = 10 # range of matrix
-        self.N = 100 #total number of steps
-        self.T = 1 #step
+        
         
     def __get_coordinates(self): 
         points = []
@@ -114,12 +115,16 @@ class SOM:
     def update_point(self, winner, point):
         pass
     
-    def get_neighbourhood(self, x, y):
-        coeficient = self.get_afla_T()
+    def get_neighbourhood(self, i, j):
+        coeficient = self.get_neighbour_T()
         
-        height = int(x + coeficient) 
-        width = int(y + coeficient)
-
+        height_up = int(i + coeficient) 
+        height_down = int(i - coeficient)
+        
+        width_right = int(j + coeficient)
+        width_left = int(j - coeficient)
+        
+        print(height_up, height_down, width_right, width_left)
         
     def __normalizare(self, n):
         pass
@@ -130,6 +135,7 @@ class SOM:
     def get_neighbour_T(self):
         return 6.1 * math.pow(math.e, - (self.T / self.N)) + 1
 
+    
     def main(self):
         self.window.open_window(block=False)
             
@@ -142,4 +148,4 @@ if __name__ == '__main__':
     som = SOM()
     som.main()
     
-    som.get_neighbourhood()
+    som.get_neighbourhood(2, 3)

@@ -51,7 +51,10 @@ ax.set_xticks([])
 ax.set_yticks([])  
 
 # Show the plot
-plt.grid(True)
+ax.axhline(0, color='black', linewidth=0.5)
+ax.axvline(0, color='black', linewidth=0.5)
+
+plt.grid()
 plt.show()
 
 
