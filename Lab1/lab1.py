@@ -17,19 +17,19 @@ class GaussAI:
     ]
 
     def __create_file(self):
-         file = open("output.txt", "w")
-         
-         return file
-     
+        file = open("output.txt", "w")
+
+        return file
+
     def get_gauss(self, coordinate, zone):
         key = list(coordinate.keys())[0]
-        
+
         numerator = ((zone[f'm{key}'] - coordinate[key]) ** 2)
         denominator = (2 * (zone[f'o{key}'] ** 2))
-       
+
         fraction =  -1 * (numerator / denominator)
         gauss_result = math.e ** fraction
-        
+
         return gauss_result
 
     def is_valid(self, gauss_value):

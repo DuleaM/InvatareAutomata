@@ -177,7 +177,6 @@ class SOM:
 
         return int(6.1 * math.pow(math.e, - (self.T / self.N)) + 1)
 
-
     def main(self):
         self.window.open_window(block=False)
         self.draw_plot()
