@@ -63,3 +63,6 @@ class Window:
 
     def clear_window(self):
         self.ax.clear()
+
+    def pause_window(self, seconds):
+        plt.pause(seconds)

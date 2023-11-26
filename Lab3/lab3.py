@@ -73,6 +73,8 @@ class SOM:
         self.window.set_points(self.points)
         self.window.set_neurons(self.neurons)
         self.window.draw_lines(self.neurons)
+        self.window.pause_window(3)
+
 
     def get_distance(self, point, neuron):
         """Get Euclidian Distance between a point and a neuron
@@ -120,7 +122,8 @@ class SOM:
                 neighbour_new_coordinates = self.get_new_coordinates(new_winner_coordinates, neighbour)
                 self.neurons[neighbour_coordinates[0]][neighbour_coordinates[1]] = neighbour_new_coordinates
 
-            self.draw_plot(refresh=True)
+
+        self.draw_plot(refresh=True)
 
     def get_new_coordinates(self, point, neuron):
         alfa_t = self.get_afla_T()
@@ -178,7 +181,6 @@ class SOM:
         self.window.open_window(block=False)
 
         self.draw_plot(refresh=True)
-        self.get_neighbourhood(4, 4)
         self.replace_closest_neuron()
 
         self.window.open_window()
