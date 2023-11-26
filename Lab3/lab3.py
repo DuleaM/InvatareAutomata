@@ -91,10 +91,12 @@ class SOM:
         return math.sqrt(xs + ys)
 
     def replace_closest_neuron(self):
+        """ We go through all the points and we replace the closest neuron coordinates
 
+        """
         for point in self.points:
             min_distance = sys.maxsize
-            closest_neuron = None
+            winner_neuron = None
 
             for row in self.neurons:
                 for neuron in row:
@@ -102,15 +104,17 @@ class SOM:
 
                     if distance < min_distance:
                         min_distance = distance
-                        closest_neuron = neuron
+                        winner_neuron = neuron
 
-            self.replace_neuron(closest_neuron)
+            #here we replace the neuron corodinates
 
-    def replace_neuron(self, neuron):
-        pass
+    def get_new_coordinates(self, point, neuron):
+        alfa_t = self.get_afla_T()
 
-    def update_point(self, winner, point):
-        pass
+        new_x = neuron['x'] + alfa_t * (point['x'] - neuron['x'])
+        new_y = neuron['y'] + alfa_t * (point['y'] - neuron['y'])
+
+        return {'x': new_x, 'y': new_y}
 
     def get_neighbourhood(self, i, j):
         neigbourhood_coeficient = self.get_neighbour_T()
@@ -122,7 +126,7 @@ class SOM:
 
         #to draw the neighbours
         #self.window.set_points(neighbours, color='green', strehgth=20)
-
+        return neighbours
 
     def __get_neighbours(self, i, j, coeficient):
         neighbours = []
