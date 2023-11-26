@@ -115,18 +115,17 @@ class SOM:
     def get_neighbourhood(self, i, j):
         neigbourhood_coeficient = self.get_neighbour_T()
         neighbours=[]
+
         for coeficinet in range(1, neigbourhood_coeficient):
-            n = self.__get_neighbour(i, j, coeficinet)
-            neighbours.extend(n)
+            area_neighbourhood = self.__get_neighbours(i, j, coeficinet)
+            neighbours.extend(area_neighbourhood)
+
+        #to draw the neighbours
+        #self.window.set_points(neighbours, color='green', strehgth=20)
 
 
-        #self.window.clear_window()
-        self.window.set_points(neighbours, color='green', strehgth=20)
-
-
-    def __get_neighbour(self, i, j, coeficient):
+    def __get_neighbours(self, i, j, coeficient):
         neighbours = []
-
         height_up, height_down = i + coeficient, i - coeficient
         width_right, width_left = j + coeficient, j - coeficient
 
