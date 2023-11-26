@@ -20,7 +20,7 @@ class SOM:
         # setting up the other vars
         self.length = 10 # range of matrix
         self.N = 10 #total number of steps
-        self.T = 8 #step
+        self.T = 1 #step
 
         # setting up the window
         self.window = Window()
@@ -116,10 +116,12 @@ class SOM:
         neigbourhood_coeficient = self.get_neighbour_T()
         neighbours=[]
         for coeficinet in range(1, neigbourhood_coeficient):
-            neighbours = self.__get_neighbour(i, j, coeficinet)
+            n = self.__get_neighbour(i, j, coeficinet)
+            neighbours.extend(n)
 
-            self.window.clear_window()
-            self.window.set_points(neighbours, color='green', strehgth=20)
+
+        #self.window.clear_window()
+        self.window.set_points(neighbours, color='green', strehgth=20)
 
 
     def __get_neighbour(self, i, j, coeficient):
@@ -128,25 +130,18 @@ class SOM:
         height_up, height_down = i + coeficient, i - coeficient
         width_right, width_left = j + coeficient, j - coeficient
 
-        for y in range(height_down, height_up + 1):
-            if y < 0 or y >= self.length:
-                continue
+        for row in range(height_down, height_up + 1):
+            for col in range(width_left, width_right + 1):
+                if row == i and col == j:
+                    continue
 
-            if height_down >= 0 and height_down < self.length:
-                neighbours.append(self.neurons[height_down][y])
+                if row < 0 or row >= self.length:
+                    continue
 
-            if height_up >= 0 and height_up < self.length:
-                neighbours.append(self.neurons[height_up][y])
+                if col < 0 or col >= self.length:
+                    continue
 
-        for x in range(height_down, height_up + 1):
-            if x < 0 or x >= self.length:
-                continue
-
-            if width_right >= 0 and width_right < self.length:
-                neighbours.append(self.neurons[x][width_right])
-
-            if width_left >= 0 and width_left < self.length:
-                neighbours.append(self.neurons[x][width_left])
+                neighbours.append(self.neurons[row][col])
 
         return neighbours
 
