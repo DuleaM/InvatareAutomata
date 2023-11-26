@@ -19,7 +19,7 @@ class SOM:
     def __init__(self) -> None:
         # setting up the other vars
         self.length = 10 # range of matrix
-        self.N = 10 #total number of steps
+        self.N = 15 #total number of steps
         self.T = 1 #step
 
         # setting up the window
@@ -72,9 +72,10 @@ class SOM:
 
         self.window.set_points(self.points)
         self.window.set_neurons(self.neurons)
-        self.window.draw_lines(self.neurons)
-        self.window.pause_window(3)
-
+        if self.T == 1:
+            self.window.draw_lines(self.neurons)
+        self.window.pause_window(1)
+        print(self.get_afla_T())
 
     def get_distance(self, point, neuron):
         """Get Euclidian Distance between a point and a neuron
@@ -178,10 +179,16 @@ class SOM:
 
 
     def main(self):
+
+
         self.window.open_window(block=False)
 
-        self.draw_plot(refresh=True)
-        self.replace_closest_neuron()
+
+        self.draw_plot()
+
+        while self.T < self.N:
+            self.T += 1
+            self.replace_closest_neuron()
 
         self.window.open_window()
 
