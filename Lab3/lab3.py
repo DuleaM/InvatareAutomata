@@ -94,19 +94,33 @@ class SOM:
         """ We go through all the points and we replace the closest neuron coordinates
 
         """
+
         for point in self.points:
             min_distance = sys.maxsize
-            winner_neuron = None
+            winner_neuron= None
 
-            for row in self.neurons:
-                for neuron in row:
+            for i, row in enumerate(self.neurons):
+                for j, neuron in enumerate(row):
                     distance = self.get_distance(point, neuron)
 
                     if distance < min_distance:
                         min_distance = distance
-                        winner_neuron = neuron
+                        winner_neuron = (i, j)
 
-            #here we replace the neuron corodinates
+            # here we replace the winner neuron coordinates
+            new_winner_coordinates = self.get_new_coordinates(point, self.neurons[winner_neuron[0]][winner_neuron[1]])
+            self.neurons[winner_neuron[0]][winner_neuron[1]] = new_winner_coordinates
+
+
+            #here we replace the neighbours coordinates
+            neighbours = self.get_neighbourhood(winner_neuron[0], winner_neuron[1])
+            for neighbour_coordinates in neighbours:
+
+                neighbour = self.neurons[neighbour_coordinates[0]][neighbour_coordinates[1]]
+                neighbour_new_coordinates = self.get_new_coordinates(new_winner_coordinates, neighbour)
+                self.neurons[neighbour_coordinates[0]][neighbour_coordinates[1]] = neighbour_new_coordinates
+
+
 
     def get_new_coordinates(self, point, neuron):
         alfa_t = self.get_afla_T()
@@ -124,8 +138,6 @@ class SOM:
             area_neighbourhood = self.__get_neighbours(i, j, coeficinet)
             neighbours.extend(area_neighbourhood)
 
-        #to draw the neighbours
-        #self.window.set_points(neighbours, color='green', strehgth=20)
         return neighbours
 
     def __get_neighbours(self, i, j, coeficient):
@@ -144,7 +156,7 @@ class SOM:
                 if col < 0 or col >= self.length:
                     continue
 
-                neighbours.append(self.neurons[row][col])
+                neighbours.append((row, col))
 
         return neighbours
 
