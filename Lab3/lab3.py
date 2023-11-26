@@ -179,11 +179,7 @@ class SOM:
 
 
     def main(self):
-
-
         self.window.open_window(block=False)
-
-
         self.draw_plot()
 
         while self.T < self.N:
