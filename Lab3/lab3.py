@@ -12,8 +12,6 @@ class SOM:
     calculul vecinatatii ->
 
     N -> este dat de noi ?
-
-
     calculam prima data invingator intre neuron si punct
     dupa mutam neuronul vecin cu aceeasi formula dupa neuronul invingator
     vecin se considera orice punct din domeniul [i-v, i+v] şi [j-v, j+v], unde V
@@ -22,7 +20,7 @@ class SOM:
         # setting up the other vars
         self.length = 10 # range of matrix
         self.N = 10 #total number of steps
-        self.T = 1 #step
+        self.T = 8 #step
 
         # setting up the window
         self.window = Window()
@@ -115,30 +113,62 @@ class SOM:
         pass
 
     def get_neighbourhood(self, i, j):
-        coeficient = self.get_neighbour_T()
+        neigbourhood_coeficient = self.get_neighbour_T()
+        neighbours=[]
+        for coeficinet in range(1, neigbourhood_coeficient):
+            neighbours = self.__get_neighbour(i, j, coeficinet)
 
-        height_up = int(i + coeficient)
-        height_down = int(i - coeficient)
+            self.window.clear_window()
+            self.window.set_points(neighbours, color='green', strehgth=20)
 
-        width_right = int(j + coeficient)
-        width_left = int(j - coeficient)
 
-        print(height_up, height_down, width_right, width_left)
+    def __get_neighbour(self, i, j, coeficient):
+        neighbours = []
 
-    def __normalizare(self, n):
-        pass
+        height_up, height_down = i + coeficient, i - coeficient
+        width_right, width_left = j + coeficient, j - coeficient
+
+        for y in range(height_down, height_up + 1):
+            if y < 0 or y >= self.length:
+                continue
+
+            if height_down >= 0 and height_down < self.length:
+                neighbours.append(self.neurons[height_down][y])
+
+            if height_up >= 0 and height_up < self.length:
+                neighbours.append(self.neurons[height_up][y])
+
+        for x in range(height_down, height_up + 1):
+            if x < 0 or x >= self.length:
+                continue
+
+            if width_right >= 0 and width_right < self.length:
+                neighbours.append(self.neurons[x][width_right])
+
+            if width_left >= 0 and width_left < self.length:
+                neighbours.append(self.neurons[x][width_left])
+
+        return neighbours
+
 
     def get_afla_T(self):
         return 0.6 * math.pow(math.e, - (self.T / self.N))
 
     def get_neighbour_T(self):
-        return 6.1 * math.pow(math.e, - (self.T / self.N)) + 1
+        """Get Neighbourhood Coeficient
+
+        Returns:
+            float: the neighbourhood coeficient
+        """
+
+        return int(6.1 * math.pow(math.e, - (self.T / self.N)) + 1)
 
 
     def main(self):
         self.window.open_window(block=False)
 
         self.draw_plot(refresh=True)
+        self.get_neighbourhood(4, 4)
         self.replace_closest_neuron()
 
         self.window.open_window()
@@ -147,4 +177,4 @@ if __name__ == '__main__':
     som = SOM()
     som.main()
 
-    som.get_neighbourhood(2, 3)
+    #som.get_neighbourhood(4, 4)

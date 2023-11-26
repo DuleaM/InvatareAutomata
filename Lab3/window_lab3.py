@@ -21,7 +21,7 @@ class Window:
         self.ax.set_xticks([])
         self.ax.set_yticks([])
 
-    def set_points(self, points):
+    def set_points(self, points, color='black', strehgth=1):
         x = []
         y = []
 
@@ -29,7 +29,7 @@ class Window:
             x.append(point['x'])
             y.append(point['y'])
 
-        self.draw_points(x, y, color='black', strength=1, label='Points')
+        self.draw_points(x, y, color=color, strength=strehgth, label='Points')
 
     def set_neurons(self, neurons):
         x = []
