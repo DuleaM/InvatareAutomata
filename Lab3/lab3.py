@@ -19,7 +19,7 @@ class SOM:
     def __init__(self) -> None:
         # setting up the other vars
         self.length = 10 # range of matrix
-        self.N = 15 #total number of steps
+        self.N = 10 #total number of steps
         self.T = 1 #step
 
         # setting up the window
@@ -181,7 +181,7 @@ class SOM:
         self.window.open_window(block=False)
         self.draw_plot()
 
-        while self.T < self.N:
+        while self.get_afla_T() > 0.01:
             self.T += 1
             self.replace_closest_neuron()
 
