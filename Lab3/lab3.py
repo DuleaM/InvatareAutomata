@@ -72,8 +72,7 @@ class SOM:
 
         self.window.set_points(self.points)
         self.window.set_neurons(self.neurons)
-        if self.T == 1:
-            self.window.draw_lines(self.neurons)
+        self.window.draw_lines(self.neurons)
         self.window.pause_window(1)
         print(self.get_afla_T())
 
