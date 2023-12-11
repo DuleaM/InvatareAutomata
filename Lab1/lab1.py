@@ -9,11 +9,11 @@ class GaussAI:
     y_minus = y_plus * -1
 
     zones = [
-        {'mx': 180, 'ox': 10, 'my': 220, 'oy': 10, 'color': 'red'},
-        {'mx': -100, 'ox': 5, 'my': 50, 'oy': 5, 'color': 'green'},
-        {'mx': -200, 'ox': 10, 'my': 100, 'oy': 10, 'color': 'blue'},
-        {'mx': -210, 'ox': 5, 'my': -100, 'oy': 5, 'color': 'yellow'},
-        {'mx': 150, 'ox': 10, 'my': -150, 'oy': 10, 'color': 'pink'}
+        {'mx': 180, 'ox': 10, 'my': 220, 'oy': 10, 'color': 'red', 'zone': 1},
+        {'mx': -100, 'ox': 5, 'my': 50, 'oy': 5, 'color': 'green', 'zone': 2},
+        {'mx': -200, 'ox': 10, 'my': 100, 'oy': 10, 'color': 'blue', 'zone': 3},
+        {'mx': -210, 'ox': 5, 'my': -100, 'oy': 5, 'color': 'yellow', 'zone': 4},
+        {'mx': 150, 'ox': 10, 'my': -150, 'oy': 10, 'color': 'pink', 'zone': 5}
     ]
 
     def __create_file(self):
