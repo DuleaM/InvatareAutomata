@@ -12,7 +12,8 @@ class BackPropagation:
         self.hidden_prag = [random() for _ in range(2)]
         self.weights_input_hidden = [[random() for _ in range(2)] for __ in range(2)]
         self.weights_output_hidden = [[random() for _ in range(1)] for __ in range(2)]
-
+        self.output_prag = random()
+        
     def get_sigmoid(self, x) -> float:
         return 1 / (1 + math.exp(-x))
 
@@ -23,8 +24,8 @@ class BackPropagation:
         error = 0
         while error < 0.001:
             for i in range(len(self.input)):
-                self.forward_propagation(i)
-                self.back_propagation(i)
+                output, error = self.forward_propagation(i)
+                self.back_propagation(i, output)
 
     def forward_propagation(self, i) -> int:
         input = [self.input[i][0], self.input[i][1]]
@@ -37,13 +38,21 @@ class BackPropagation:
         for j in range(len(self.output)):
             output += self.weights_output_hidden[j] * self.hidden[j]
 
+        output = self.get_sigmoid(output + self.output_prag)
         error = (self.output[i][0] - output) ** 2
-        return error
+        
+        return output, error
 
-    def back_propagation(self, i) -> None:
-        pass
-
-    def main(self, x, y):
+    def back_propagation(self, i, output) -> None:
+        for j in range(2):
+            self.weights_output_hidden[j][0] += 0.1 * (self.output[i][0] - output) * self.hidden[j] * self.get_derivate_sigmoid(output)
+            
+        for j in range(2):
+            for k in range(2):
+                self.weights_input_hidden[j][k] += 0.1 * (self.output[i][0] - output) * self.weights_output_hidden[j][0] * self.get_derivate_sigmoid(output) * self.get_derivate_sigmoid(self.hidden[j]) * self.input[i][k]
+                self.hidden_prag[j] += 0.1 * (self.output[i][0] - output) * self.weights_output_hidden[j][0] * self.get_derivate_sigmoid(output) * self.get_derivate_sigmoid(self.hidden[j])
+    
+    def predict(self, x, y):
         output = 0
         outputPrag = 0
 
@@ -55,6 +64,7 @@ class BackPropagation:
             output += self.weights_output_hidden[i] * self.hidden[i]
 
         output = self.get_sigmoid(output + outputPrag)
+
 
 if __name__ == '__main__':
     bp = BackPropagation()
