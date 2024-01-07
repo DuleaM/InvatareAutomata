@@ -7,7 +7,6 @@ class BackPropagation:
     output = [[0], [1], [1], [0]]
 
     def __init__(self) -> None:
-        self.output = []
         self.hidden = [random() for _ in range(2)]
         self.hidden_prag = [random() for _ in range(2)]
         self.weights_input_hidden = [[random() for _ in range(2)] for __ in range(2)]
@@ -22,7 +21,7 @@ class BackPropagation:
 
     def train_model(self) -> None:
         error = 0
-        while error < 0.001:
+        while error > 0.001:
             for i in range(len(self.input)):
                 output, error = self.forward_propagation(i)
                 self.back_propagation(i, output)
@@ -31,12 +30,12 @@ class BackPropagation:
         input = [self.input[i][0], self.input[i][1]]
         output = 0
 
-        for j in range(len(self.hidden)):
+        for j in range(2):
             self.hidden[j] = input[0] * self.weights_input_hidden[0][j] + input[1] * self.weights_input_hidden[1][j]
             self.hidden[j] = self.get_sigmoid(self.hidden[j])
 
-        for j in range(len(self.output)):
-            output += self.weights_output_hidden[j] * self.hidden[j]
+        for j in range(2):
+            output += self.weights_output_hidden[j][0] * self.hidden[j]
 
         output = self.get_sigmoid(output + self.output_prag)
         error = (self.output[i][0] - output) ** 2
@@ -61,12 +60,35 @@ class BackPropagation:
             self.hidden[i] = self.get_sigmoid(self.hidden[i])
 
         for i in range(2):
-            output += self.weights_output_hidden[i] * self.hidden[i]
+            output += self.weights_output_hidden[i][0] * self.hidden[i]
 
         output = self.get_sigmoid(output + outputPrag)
 
+        return output
 
+    def main(self):
+        pass
 if __name__ == '__main__':
     bp = BackPropagation()
+    
     bp.train_model()
-    print(bp.main())
+    
+    if(bp.predict(0, 0) < 0.5):
+        print("0")
+    else:
+        print("1")
+    
+    if(bp.predict(0, 1) < 0.5):
+        print("0")
+    else:
+        print("1")
+    
+    if(bp.predict(1, 0) < 0.5):
+        print("0")
+    else:
+        print("1")
+    
+    if(bp.predict(1, 1) < 0.5):
+        print("0")
+    else:
+        print("1")
