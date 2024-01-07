@@ -7,11 +7,12 @@ class BackPropagation:
     output = [[0], [1], [1], [0]]
 
     def __init__(self) -> None:
-        self.hidden = [random() for _ in range(2)]
-        self.hidden_prag = [random() for _ in range(2)]
-        self.weights_input_hidden = [[random() for _ in range(2)] for __ in range(2)]
-        self.weights_output_hidden = [[random() for _ in range(1)] for __ in range(2)]
-        self.output_prag = random()
+        self.output_prag = random() #prag output
+        self.hidden_prag = [random() for _ in range(2)] #prag hidden
+        self.hidden = [random() for _ in range(2)] #hidden layer
+        self.weights_input_hidden = [[random() for _ in range(2)] for __ in range(2)] #ponderi conexiuni input-hidden
+        self.weights_output_hidden = [[random() for _ in range(1)] for __ in range(2)] #ponderi conexiuni hidden-output
+        
         
     def get_sigmoid(self, x) -> float:
         return 1. / (1. + math.exp(-x))
@@ -28,6 +29,7 @@ class BackPropagation:
                 output, error = self.forward_propagation(i, input)
                 self.back_propagation(i, input, output)
             print(error)
+            
     def forward_propagation(self, i, input) -> int:
         output = 0
 
@@ -38,8 +40,7 @@ class BackPropagation:
         for j in range(2):
             output += self.weights_output_hidden[j][0] * self.hidden[j]
 
-        output += self.output_prag
-        output = self.get_sigmoid(output)
+        output = self.get_sigmoid(self.output_prag + output)
         
         error = (output - self.output[i][0]) ** 2
         
