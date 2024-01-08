@@ -15,7 +15,6 @@ class BackPropagation:
         self.epochs_max = 100000
         self.epochs = self.epochs_max
 
-        
     def print_variables(self):
         print("hidden:", self.hidden)
         print("output_prag:", self.output_prag)
@@ -58,21 +57,22 @@ class BackPropagation:
 
         output = self.get_sigmoid(self.output_prag + output)
 
+
         return output
     
     def back_propagation(self, i, input, output) -> None:
-
-        self.output_prag -= 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output)
+        coef = 0.8
+        self.output_prag = self.output_prag - coef * (2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output))
         
         #input - hidden
         for j in range(2):
-            self.hidden_prag[j] -= 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output) * self.weights_output_hidden[j][0] * self.get_derivate_sigmoid(self.hidden[j])
-            self.weights_input_hidden[0][j] -= 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output) * self.weights_output_hidden[j][0] * self.get_derivate_sigmoid(self.hidden[j]) * input[0]
-            self.weights_input_hidden[1][j] -= 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output) * self.weights_output_hidden[j][0] * self.get_derivate_sigmoid(self.hidden[j]) * input[1]
+            self.hidden_prag[j] -= coef * 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output) * self.weights_output_hidden[j][0] * self.get_derivate_sigmoid(self.hidden[j])
+            self.weights_input_hidden[0][j] -= coef * 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output) * self.weights_output_hidden[j][0] * self.get_derivate_sigmoid(self.hidden[j]) * input[0]
+            self.weights_input_hidden[1][j] -= coef * 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output) * self.weights_output_hidden[j][0] * self.get_derivate_sigmoid(self.hidden[j]) * input[1]
         
         #hidden - output
         for j in range(2):
-            self.weights_output_hidden[j][0] -= 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output) * self.hidden[j]
+            self.weights_output_hidden[j][0] -= coef * 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output) * self.hidden[j]
 
 
 
@@ -85,22 +85,15 @@ if __name__ == '__main__':
     bp.train_model()
     print(f'Program finished with {bp.epochs_max - bp.epochs} epochs')
     
-    if(bp.predict(0, 0) >= 0.5):
-        print("0 ^ 0 = 1")
-    else:
-        print("0 ^ 0 = 0")
+    temp = bp.predict(0, 0)
+    print(f"0 ^ 0 = {temp}")
     
-    if(bp.predict(0, 1) >= 0.5):
-        print("0 ^ 1 = 1")
-    else:
-        print("0 ^ 1 = 0")
-    
-    if(bp.predict(1, 0) >= 0.5):
-        print("1 ^ 0 = 1")
-    else:
-        print("1 ^ 0 = 0")
-    
-    if(bp.predict(1, 1) >= 0.5):
-        print("1 ^ 1 = 1")
-    else:
-        print("1 ^ 1 = 0")
+    temp = bp.predict(0, 1)
+    print(f"0 ^ 1 = {temp}")
+
+    temp = bp.predict(1, 0)
+    print(f"1 ^ 0 = {temp}")
+        
+    temp = bp.predict(1, 1)
+    print(f"1 ^ 1 = {temp}")
+
