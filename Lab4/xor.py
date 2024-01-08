@@ -12,7 +12,16 @@ class BackPropagation:
         self.hidden_prag = [random() for _ in range(2)] #prag hidden
         self.weights_input_hidden = [[random() for _ in range(2)] for __ in range(2)] #ponderi conexiuni input-hidden
         self.weights_output_hidden = [[random() for _ in range(1)] for __ in range(2)] #ponderi conexiuni hidden-output
+        self.epochs = 0
+
+        self.print_variables()
         
+    def print_variables(self):
+        print("hidden:", self.hidden)
+        print("output_prag:", self.output_prag)
+        print("hidden_prag:", self.hidden_prag)
+        print("weights_input_hidden:", self.weights_input_hidden)
+        print("weights_output_hidden:", self.weights_output_hidden)
         
     def get_sigmoid(self, x) -> float:
         return 1. / (1. + math.exp(-x))
@@ -28,6 +37,8 @@ class BackPropagation:
                 
                 output, error = self.forward_propagation(i, input)
                 self.back_propagation(i, input, output)
+            
+            self.epochs += 1
             print(error)
 
     def forward_propagation(self, i, input) -> int:
@@ -70,6 +81,7 @@ if __name__ == '__main__':
     bp = BackPropagation()
     
     bp.train_model()
+    print(f'Program finished with {bp.epochs} epochs')
     
     if(bp.predict(0, 0) >= 0.5):
         print("0 ^ 0 = 1")
