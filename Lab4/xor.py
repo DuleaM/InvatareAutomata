@@ -12,9 +12,9 @@ class BackPropagation:
         self.hidden_prag = [random() for _ in range(2)] #prag hidden
         self.weights_input_hidden = [[random() for _ in range(2)] for __ in range(2)] #ponderi conexiuni input-hidden
         self.weights_output_hidden = [[random() for _ in range(1)] for __ in range(2)] #ponderi conexiuni hidden-output
-        self.epochs = 0
+        self.epochs_max = 100000
+        self.epochs = self.epochs_max
 
-        self.print_variables()
         
     def print_variables(self):
         print("hidden:", self.hidden)
@@ -31,14 +31,14 @@ class BackPropagation:
 
     def train_model(self) -> None:
         error = 1
-        while error > 0.001:
+        while error > 0.001 and self.epochs != 0:
             for i in range(len(self.input)):
                 input = [self.input[i][0], self.input[i][1]]
                 
                 output, error = self.forward_propagation(i, input)
                 self.back_propagation(i, input, output)
             
-            self.epochs += 1
+            self.epochs -= 1
             print(error)
 
     def forward_propagation(self, i, input) -> int:
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     bp = BackPropagation()
     
     bp.train_model()
-    print(f'Program finished with {bp.epochs} epochs')
+    print(f'Program finished with {bp.epochs_max - bp.epochs} epochs')
     
     if(bp.predict(0, 0) >= 0.5):
         print("0 ^ 0 = 1")
