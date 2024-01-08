@@ -7,9 +7,9 @@ class BackPropagation:
     output = [[0], [1], [1], [0]]
 
     def __init__(self) -> None:
+        self.hidden = [0, 0] #hidden layer
         self.output_prag = random() #prag output
         self.hidden_prag = [random() for _ in range(2)] #prag hidden
-        self.hidden = [random() for _ in range(2)] #hidden layer
         self.weights_input_hidden = [[random() for _ in range(2)] for __ in range(2)] #ponderi conexiuni input-hidden
         self.weights_output_hidden = [[random() for _ in range(1)] for __ in range(2)] #ponderi conexiuni hidden-output
         
@@ -29,23 +29,26 @@ class BackPropagation:
                 output, error = self.forward_propagation(i, input)
                 self.back_propagation(i, input, output)
             print(error)
-            
+
     def forward_propagation(self, i, input) -> int:
-        output = 0
-
-        for j in range(2):
-            self.hidden[j] = input[0] * self.weights_input_hidden[0][j] + input[1] * self.weights_input_hidden[1][j] + self.hidden_prag[j]
-            self.hidden[j] = self.get_sigmoid(self.hidden[j])
-
-        for j in range(2):
-            output += self.weights_output_hidden[j][0] * self.hidden[j]
-
-        output = self.get_sigmoid(self.output_prag + output)
+        output = self.predict(input[0], input[1])
         
         error = (output - self.output[i][0]) ** 2
         
         return output, error
 
+    def predict(self, x, y):
+        output = 0
+        for i in range(2):
+            self.hidden[i] = self.get_sigmoid(x * self.weights_input_hidden[0][i] + y * self.weights_input_hidden[1][i] + self.hidden_prag[i])
+        
+        for i in range(2):
+            output += self.weights_output_hidden[i][0] * self.hidden[i]
+
+        output = self.get_sigmoid(self.output_prag + output)
+
+        return output
+    
     def back_propagation(self, i, input, output) -> None:
 
         self.output_prag -= 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output)
@@ -57,19 +60,8 @@ class BackPropagation:
         
         for j in range(2):
             self.weights_output_hidden[j][0] -= 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output) * self.hidden[j]
-        
-    def predict(self, x, y):
-        output = 0
-        for i in range(2):
-            self.hidden[i] = x * self.weights_input_hidden[0][i] + y * self.weights_input_hidden[1][i] + self.hidden_prag[i]
-            self.hidden[i] = self.get_sigmoid(self.hidden[i])
 
-        for i in range(2):
-            output += self.weights_output_hidden[i][0] * self.hidden[i]
 
-        output = self.get_sigmoid(output + self.output_prag)
-
-        return output
 
     def main(self):
         pass
