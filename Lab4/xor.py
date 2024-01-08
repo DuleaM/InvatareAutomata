@@ -64,11 +64,13 @@ class BackPropagation:
 
         self.output_prag -= 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output)
         
+        #input - hidden
         for j in range(2):
             self.hidden_prag[j] -= 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output) * self.weights_output_hidden[j][0] * self.get_derivate_sigmoid(self.hidden[j])
             self.weights_input_hidden[0][j] -= 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output) * self.weights_output_hidden[j][0] * self.get_derivate_sigmoid(self.hidden[j]) * input[0]
             self.weights_input_hidden[1][j] -= 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output) * self.weights_output_hidden[j][0] * self.get_derivate_sigmoid(self.hidden[j]) * input[1]
         
+        #hidden - output
         for j in range(2):
             self.weights_output_hidden[j][0] -= 2 * (output - self.output[i][0]) * self.get_derivate_sigmoid(output) * self.hidden[j]
 
